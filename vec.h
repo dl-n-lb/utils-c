@@ -1,6 +1,10 @@
 #ifndef VEC_H_
 #define VEC_H_
 
+#ifndef NDEBUG
+#define SAFE_INDEX
+#endif //NDEBUG
+
 #ifndef VEC_NO_ASSERT
 #include <assert.h>
 #define VEC_ASSERT assert
@@ -45,19 +49,19 @@ typedef struct {
     .cap = sz,				        \
   }
 
+#define arr_new(T, sz)				\
+  (arr_t) {					\
+    .data = VEC_MALLOC(sizeof(T) * sz),		\
+    .len = sz,					\
+  }
+
+#define arr_from(T, c_arr, sz)			\
+  (arr_t) { .data = (char *)c_arr, .len = sz }
+
 #define vec_from(T, c_arr, sz) (vec_t) {				\
     .data = (char *)c_arr, .len = sz, .cap = sz }
 
-
-vec_t _vec_from_const(char *const_arr, size_t sz, size_t elem_sz) {
-  char *data = malloc(sz);
-  VEC_MEMCPY(data, const_arr, sz);
-  return (vec_t) {
-    .data = data,
-    .len = sz/elem_sz,
-    .cap = sz/elem_sz
-  };
-}
+vec_t _vec_from_const(char *const_arr, size_t sz, size_t elem_sz);
 
 #define vec_from_const(T, const_arr)					\
   _vec_from_const((char *)(const_arr), sizeof((const_arr)), sizeof((const_arr)[0]))
@@ -102,7 +106,19 @@ typedef dstr_t vec_t;
 
 #define sstr_at(sstr, idx) arr_at(char, sstr, idx)
 #define dstr_at(dstr, idx) vec_at(char, dstr, idx)
-
 #endif
 
 #endif // VEC_H_
+#ifdef VEC_IMPL
+1
+vec_t _vec_from_const(char *const_arr, size_t sz, size_t elem_sz) {
+  char *data = malloc(sz);
+  VEC_MEMCPY(data, const_arr, sz);
+  return (vec_t) {
+    .data = data,
+    .len = sz/elem_sz,
+    .cap = sz/elem_sz
+  };
+}
+
+#endif // VEC_IMPL
