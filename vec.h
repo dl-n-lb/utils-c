@@ -5,18 +5,25 @@
 #define SAFE_INDEX
 #endif //NDEBUG
 
-#ifndef VEC_NO_ASSERT
+#ifndef VEC_ASSERT
 #include <assert.h>
 #define VEC_ASSERT assert
-#endif // VEC_NO_ASSERT
+#endif // VEC_ASSERT
 
-#ifndef VEC_NO_MALLOC
+#ifndef VEC_MALLOC
 #include <stdlib.h>
-#include <string.h>
 #define VEC_MALLOC malloc
+#endif // VEC_MALLOC
+
+#ifndef VEC_REALLOC
+#include <stdlib.h>
 #define VEC_REALLOC realloc
+#endif // VEC_REALLOC
+
+#ifndef VEC_MEMCPY
+#include <string.h>
 #define VEC_MEMCPY memcpy
-#endif // VEC_NO_MALLOC
+#endif // VEC_MEMCPY
 
 typedef struct {
   char *data;

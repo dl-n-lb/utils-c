@@ -14,8 +14,10 @@ Examples can be found in `test.c`.
 Allocators are macro defined so if you want to define your own:
 
 ``` c
-#define VEC_NO_MALLOC
 #define VEC_MALLOC my_malloc
+#define VEC_REALLOC my_realloc
+#define VEC_ASSERT my_assert
+#define VEC_MEMCPY my_memcpy
 #include "vec.h"
 ```
 ## vec.h
@@ -41,7 +43,8 @@ The view is the same behind the scenes, but is expected to be used in places whe
 ``` c
 int *i = malloc(10 * sizeof(int));
 i[0] = 10;
-arr_t arr = arr_from(int, i, 10); // arr = {10, ... (some values)}
+arr_t arr = arr_from(int, i, 10); // arr = {10, ... (some values)} : arr now owns the pointer
+// so from here on, use of i is not recommended
 *arr_ref(int, arr, 1) = 9;
 arr_for_each(int, arr, it) {
 	printf("%d", *it); // prints 10, 9, then undefined behaviour :)
@@ -54,7 +57,7 @@ Coming soon...™
 
 
 ## TODO
-- vec_t concatenation []
-- view docs			  []
-- more safety		  []
-- examples			  []
+- vec_t concatenation [ ]
+- view docs			  [ ]
+- more safety		  [ ]
+- examples			  [ ]
