@@ -103,7 +103,7 @@ vec_t _vec_from_const(char *const_arr, size_t sz, size_t elem_sz);
 #define vec_for_each(T, vec, it_name) arr_for_each(T, (vec).arr, it_name)
 
 #define vec_free(vec) (free(vec.data), vec.len = 0, vec.cap = 0)
-#define arr_free(vec) (free(arr.data), arr.len = 0)
+#define arr_free(arr) (free(arr.data), arr.len = 0)
 
 
 // TODO:
