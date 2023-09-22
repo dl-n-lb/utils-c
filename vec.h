@@ -117,7 +117,7 @@ typedef dstr_t vec_t;
 
 #endif // VEC_H_
 #ifdef VEC_IMPL
-1
+
 vec_t _vec_from_const(char *const_arr, size_t sz, size_t elem_sz) {
   char *data = malloc(sz);
   VEC_MEMCPY(data, const_arr, sz);
