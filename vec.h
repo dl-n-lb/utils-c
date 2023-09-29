@@ -83,7 +83,9 @@ vec_t _vec_from_const(char *const_arr, size_t sz, size_t elem_sz);
   } while(0)
 
 #ifdef SAFE_INDEX
-#define arr_at(T, arr, idx) (assert((idx) >= 0 && (idx) < (arr).len),	\
+// TODO: Use _Generic or something to prevent the annoying warnings when
+// unsigned types are passed
+#define arr_at(T, arr, idx) (assert((idx) >= 0 && (idx) < (arr).len), \
 			     ((T*)(arr).data)[(idx)])
 #define vec_at(T, vec, idx) arr_at(T, (vec).arr, idx)
 #define arr_ref(T, arr, idx) (assert((idx) >= 0 && (idx) < (arr).len),	\

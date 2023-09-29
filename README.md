@@ -55,6 +55,31 @@ arr_free(arr);
 ### string types
 Coming soon...™
 
+## tvec.h
+Similar to vec.h, but using typed arrays, just as an experiment. Usage might look like
+``` c
+#include "tvec.h"
+
+typedef vec(int) i32vec;
+typedef vec(float) f32vec;
+
+int main() {
+	i32vec v1 = (i32vec)vec_new(int, 4);
+	f32vec v2 = (f32vec)vec_new(float, 20);
+	vec_push(v2, 10.f);
+	vec_push(v2, 9.f);
+	for (size_t i = 8; i >= 0; i--) {
+		vec_push(v2, (float)i);
+	}
+    vec_for_each(v2, it) {
+		printf("%f", *it);
+	}	
+	vec_free(v1);
+	vec_free(v2);
+	
+	return 0;
+}
+```
 
 ## TODO
 - vec_t concatenation [ ]
