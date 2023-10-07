@@ -52,6 +52,17 @@ arr_for_each(int, arr, it) {
 arr_free(arr);
 ```
 
+### stack (NOT TESTED YET)
+The stack is literally a simple vector, but with a rename to indicate that it should be used like a stack. It also has the extra helper functions `stack_top(T, stack)`, which will return the top of the stack, and `stack_pop(stack)` which decreases the length by one, effectively reducing the stack size.
+Some code might look like:
+``` c
+stack_t stack = stack_new(int, 5); // 5 is the initial capacity, like a vector
+stack_push(int, stack, 1);
+stack_push(int, stack, 2);
+printf("%i\n", stack_top(int, stack));
+stack_pop(stack);
+```
+
 ### string types
 Coming soon...™
 

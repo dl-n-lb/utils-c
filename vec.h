@@ -47,6 +47,8 @@ typedef struct {
   size_t cap;
 } vec_t;
 
+typedef stack_t vec_t;
+
 #define VEC_GROW_RATE 2
 
 #define vec_new(T, sz)				\
@@ -55,6 +57,8 @@ typedef struct {
     .len = 0,					\
     .cap = sz,				        \
   }
+
+#define stack_new(T, sz) vec_new(T, sz)
 
 #define arr_new(T, sz)				\
   (arr_t) {					\
@@ -82,6 +86,11 @@ vec_t _vec_from_const(char *const_arr, size_t sz, size_t elem_sz);
     ((T*)(vec).data)[(vec).len++] = (val);				\
   } while(0)
 
+#define stack_push(T, stack, val) vec_push(T, stack, val)
+
+#define stack_top(T, stack) ((T*)(stack).data)[(stack).len - 1]
+#define stack_pop(stack) (stack).len -= 1;
+
 #ifdef SAFE_INDEX
 // TODO: Use _Generic or something to prevent the annoying warnings when
 // unsigned types are passed
@@ -91,11 +100,14 @@ vec_t _vec_from_const(char *const_arr, size_t sz, size_t elem_sz);
 #define arr_ref(T, arr, idx) (assert((idx) >= 0 && (idx) < (arr).len),	\
 			      &((T*)(arr).data)[(idx)])
 #define vec_ref(T, vec, idx) arr_ref(T, (vec).arr, idx)
+
 #else
+
 #define arr_at(T, arr, idx) ((T*)(arr).data)[(idx)]
 #define vec_at(T, vec, idx) arr_at(T, (vec).arr, idx)
 #define arr_ref(T, arr, idx) &((T*)(arr).data)[(idx)]
 #define vec_ref(T, vec, idx) arr_ref(T, (vec).arr, idx)
+
 #endif // SAFE_INDEX
 
 #define arr_for_each(T, arr, it_name)					\
